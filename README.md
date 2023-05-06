@@ -5,7 +5,7 @@ PGXN Extension Build and Test Tools Docker Image
 
 ``` sh
 docker run -it --rm --mount "type=bind,src=$(pwd),dst=/repo" pgxn/pgxn-tools \
-    sh -c 'cd /repo && pg-start 12 && pg-build-test'
+    sh -c 'cd /repo && make clean && pg-start 12 && pg-build-test'
 ```
 
 This project provides a simple Docker image to enable the automated testing of
@@ -33,7 +33,7 @@ with `sudo` privileges (already used by `pg-start` and `pg-build-test`):
 ``` sh
 docker run -it --rm -e AS_USER=worker \
     --mount "type=bind,src=$(pwd),dst=/repo" pgxn/pgxn-tools \
-    sh -c 'cd /repo && sudo pg-start 14 && pg-build-test'
+    sh -c 'cd /repo && make clean && sudo pg-start 14 && pg-build-test'
 ```
 
 The created user will have the UID 1001 unless `LOCAL_UID` is passed, which can
@@ -43,7 +43,7 @@ in a mounted directory:
 ``` sh
 docker run -it --rm -e AS_USER=worker -e LOCAL_UID=$(id -u) \
     --mount "type=bind,src=$(pwd),dst=/repo" pgxn/pgxn-tools \
-    sh -c 'cd /repo && sudo pg-start 14 && pg-build-test'
+    sh -c 'cd /repo && make clean && sudo pg-start 14 && pg-build-test'
 ```
 
 If no `LOCAL_UID` is set but `GITHUB_EVENT_PATH` is set (as it is in GitHub
